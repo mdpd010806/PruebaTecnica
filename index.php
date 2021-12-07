@@ -43,6 +43,29 @@
             <?php
                 }
             ?>
+
+            <?php
+                if(isset($_GET['mensaje']) and $_GET['mensaje'] == 'editado'){
+            ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Editado!</strong> Los datos fueron actualizados.
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+          </div>
+            <?php
+                }
+            ?>
+
+            <?php
+                if(isset($_GET['mensaje']) and $_GET['mensaje'] == 'eliminado'){
+            ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Eliminado!</strong> Los datos fueron borrados.
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+          </div>
+            <?php
+                }
+            ?>
+            
             <!--fin alerta-->
             <div class="card">
                 <div class="card-header">
@@ -70,8 +93,8 @@
                                 <th><?php echo $dato->nombre;?></th>
                                 <th><?php echo $dato->ciudad;?></th>
                                 <th><?php echo $dato->tipo_negocio;?></th>
-                                <th class="text-success"><a href="editar.php?id=<?php echo $dato->id;?>"><i class="bi bi-pencil-square"></a></i></th>
-                                <th class="text-danger"><a href=""><i class="bi bi-trash"></i></a></th>
+                                <th><a class="text-success" href="editar.php?id=<?php echo $dato->id;?>"><i class="bi bi-pencil-square"></a></i></th>
+                                <th><a onclick="return confirm('Estas seguro de eliminar?')" class="text-danger" href="eliminar.php?id=<?php echo $dato->id;?>"><i class="bi bi-trash"></i></a></i></th>
                             </tr>
 
                             <?php
