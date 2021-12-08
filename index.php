@@ -2,21 +2,21 @@
 
 <?php
     include_once "model/conexion.php";
-    $senetencia = $bd -> query("select c.id, c.nombre, u.nombre as ciudad, t.nombre as tipo_negocio from cliente c join ciudad u on c.ciudad = u.id join tiponegocios t on c.tipo_negocio = t.id");
+    $senetencia = $bd -> query("select c.id, c.nombre, u.nombre as ciudad, t.nombre as tipo_negocio from cliente c join ciudad u on c.ciudad = u.id join tiponegocios t on c.tipo_negocio = t.id order by c.id");
     $persona = $senetencia->fetchAll(PDO::FETCH_OBJ);
     //print_r($persona);
 ?>
 
-<div class="container mt-5">
+<div class="container mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-7">
+        <div class="col-md-7 mb-5">
             <!--inicio alerta-->
             <?php
                 if(isset($_GET['mensaje']) and $_GET['mensaje'] == 'falta'){
             ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Error!</strong> Rellena todos los campos.
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
             <?php
                 }
@@ -27,7 +27,7 @@
             ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Registrado!</strong> Se agregaron los datos.
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
             <?php
                 }
@@ -38,7 +38,7 @@
             ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Error!</strong> Vuelve a intentar.
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
             <?php
                 }
@@ -49,7 +49,7 @@
             ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Editado!</strong> Los datos fueron actualizados.
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
             <?php
                 }
@@ -60,16 +60,16 @@
             ?>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Eliminado!</strong> Los datos fueron borrados.
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
             <?php
                 }
             ?>
             
             <!--fin alerta-->
-            <div class="card">
-                <div class="card-header">
-                    Lista de personas
+            <div class="card border border-secondary">
+                <div class="card-header bg-secondary bg-gradient text-light">
+                    Lista de clientes
                 </div>
                 <div class="p-4">
                     <table class="table align-middle">
@@ -79,22 +79,26 @@
                                 <th scope="col">Cliente</th>
                                 <th scope="col">Ciudad</th>
                                 <th scope="col">Tipo de Negocio</th>
+                                <th scope="col">Valor de pedidos</th>
                                 <th scope="col" colspan="2">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             
                             <?php
+                                $numero = 0;
                                 foreach($persona as $dato){
+                                $numero ++;
                             ?>
 
                             <tr>
-                                <th scope="row"><?php echo $dato->id;?></th>
-                                <th><?php echo $dato->nombre;?></th>
-                                <th><?php echo $dato->ciudad;?></th>
-                                <th><?php echo $dato->tipo_negocio;?></th>
-                                <th><a class="text-success" href="editar.php?id=<?php echo $dato->id;?>"><i class="bi bi-pencil-square"></a></i></th>
-                                <th><a onclick="return confirm('Estas seguro de eliminar?')" class="text-danger" href="eliminar.php?id=<?php echo $dato->id;?>"><i class="bi bi-trash"></i></a></i></th>
+                                <th scope="row"><?php echo $numero;?></th>
+                                <td><?php echo $dato->nombre;?></td>
+                                <td><?php echo $dato->ciudad;?></td>
+                                <td><?php echo $dato->tipo_negocio;?></td>
+                                <td><?php echo $dato->tipo_negocio;?></td>
+                                <td><a class="text-success" href="editar.php?id=<?php echo $dato->id;?>"><i class="bi bi-pencil-square"></a></i></td>
+                                <td><a onclick="return confirm('Estas seguro de eliminar?')" class="text-danger" href="eliminar.php?id=<?php echo $dato->id;?>"><i class="bi bi-trash"></i></a></i></td>
                             </tr>
 
                             <?php
@@ -107,10 +111,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Ingresar datos:
+        <div class="col-md-4 mb-5">
+            <div class="card border border-secondary">
+                <div class="card-header bg-secondary bg-gradient text-light">
+                    Ingresar datos
                 </div>
                 <form class="p-4" method="POST" action="registrar.php">
                     <div class="mb-3">
@@ -120,7 +124,7 @@
                     <div class="mb-3">
                         <label class="form-label">Ciudad: </label>
                         <select name="txtCiudad" class="form-select" aria-label="Default select example" require>
-                            <option selected>Seleccionar Ciudad</option>
+                            <option value="" selected>Seleccionar Ciudad</option>
                             <option value="1">Barranquilla</option>
                             <option value="2">Bogota</option>
                             <option value="3">Bucaramanga</option>
@@ -132,7 +136,7 @@
                     <div class="mb-3">
                         <label class="form-label">Tipo de Negocio: </label>
                         <select name="txtNegocio" class="form-select" aria-label="Default select example" require>
-                            <option selected>Seleccionar Tipo de Negocio</option>
+                            <option value="" selected>Seleccionar Tipo de Negocio</option>
                             <option value="1">Empresario individual</option>
                             <option value="2">Sociedad limitada</option>
                             <option value="3">Sociedad anónima</option>

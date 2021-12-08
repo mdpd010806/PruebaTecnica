@@ -12,11 +12,16 @@
 
   </head>
   <body>
-      <div class="container-fluid bg-warning">
+      <div class="container-fluid bg-white bg-gradient">
           <div class="row">
               <div class="col-md">
                   <header class="py-3">
-                        <h3 class="text-center">ROYAL FILMS</h3>
+                      <div class="text-center">
+                        <a href="./index.php">
+                      <img src="https://lh3.googleusercontent.com/proxy/DmFtuW0CYF_eGKlbWAq_8ZdlLI-H6LIicuJPmP3aTmmf5cwsk_qkggcniJInMaWztLi6HON1wBQ_2EbFo4r-8wsNSNc95KwelGesawycLfYEKfBUt3Z3ce5qGTTqM7247_B2Eg" alt="Royal Films">
+                      </a>  
+                    </div>
+                      
                   </header>
               </div>
           </div>
