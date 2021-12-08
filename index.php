@@ -2,7 +2,7 @@
 
 <?php
     include_once "model/conexion.php";
-    $senetencia = $bd -> query("select c.id, c.nombre, u.nombre as ciudad, t.nombre as tipo_negocio from cliente c join ciudad u on c.ciudad = u.id join tiponegocios t on c.tipo_negocio = t.id order by c.id");
+    $senetencia = $bd -> query("select c.id, c.nombre, u.nombre as ciudad, t.nombre as tipo_negocio, ca2.valor_total from cliente c join ciudad u on c.ciudad = u.id join tiponegocios t on c.tipo_negocio = t.id left join (select avg(cu.valor_total) as valor_total, ca.cliente from pedidoscabecera ca join pedidoscuerpo cu on ca.valor_total = cu.id GROUP by ca.cliente) ca2 on c.id = ca2.cliente order by c.id");
     $persona = $senetencia->fetchAll(PDO::FETCH_OBJ);
     //print_r($persona);
 ?>
@@ -65,6 +65,17 @@
             <?php
                 }
             ?>
+
+            <?php
+                if(isset($_GET['mensaje']) and $_GET['mensaje'] == 'pedidoRegistrado'){
+            ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Felicidades!</strong> Has agregado un nuevo pedido.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+            <?php
+                }
+            ?>
             
             <!--fin alerta-->
             <div class="card border border-secondary">
@@ -79,8 +90,8 @@
                                 <th scope="col">Cliente</th>
                                 <th scope="col">Ciudad</th>
                                 <th scope="col">Tipo de Negocio</th>
-                                <th scope="col">Valor de pedidos</th>
-                                <th scope="col" colspan="2">Opciones</th>
+                                <th scope="col">Promedio de pedidos</th>
+                                <th scope="col" colspan="3">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,9 +107,10 @@
                                 <td><?php echo $dato->nombre;?></td>
                                 <td><?php echo $dato->ciudad;?></td>
                                 <td><?php echo $dato->tipo_negocio;?></td>
-                                <td><?php echo $dato->tipo_negocio;?></td>
-                                <td><a class="text-success" href="editar.php?id=<?php echo $dato->id;?>"><i class="bi bi-pencil-square"></a></i></td>
-                                <td><a onclick="return confirm('Estas seguro de eliminar?')" class="text-danger" href="eliminar.php?id=<?php echo $dato->id;?>"><i class="bi bi-trash"></i></a></i></td>
+                                <td><?php if($dato->valor_total != null){ echo "$".$dato->valor_total;}else{echo "$0";} ?></td>
+                                <td><a class="text-success" href="clientes/editar.php?id=<?php echo $dato->id;?>"><i class="bi bi-pencil-square"></a></i></td>
+                                <td><a onclick="return confirm('Estas seguro de eliminar?')" class="text-danger" href="clientes/eliminar.php?id=<?php echo $dato->id;?>"><i class="bi bi-trash"></i></a></i></td>
+                                <td><a class="text-success" href="pedidos/pedido.php?id=<?php echo $dato->id;?>&nombre=<?php echo $dato->nombre;?>"><i class="bi bi-bag-plus-fill"></a></i></td>
                             </tr>
 
                             <?php
@@ -116,7 +128,7 @@
                 <div class="card-header bg-secondary bg-gradient text-light">
                     Ingresar datos
                 </div>
-                <form class="p-4" method="POST" action="registrar.php">
+                <form class="p-4" method="POST" action="clientes/registrar.php">
                     <div class="mb-3">
                         <label class="form-label">Cliente: </label>
                         <input type="text" class="form-control" name="txtCliente" autofocus require>
