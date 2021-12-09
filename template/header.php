@@ -18,7 +18,7 @@
                   <header class="py-3">
                       <div class="text-center">
                         <a href="./index.php">
-                      <img src="https://lh3.googleusercontent.com/proxy/DmFtuW0CYF_eGKlbWAq_8ZdlLI-H6LIicuJPmP3aTmmf5cwsk_qkggcniJInMaWztLi6HON1wBQ_2EbFo4r-8wsNSNc95KwelGesawycLfYEKfBUt3Z3ce5qGTTqM7247_B2Eg" alt="Royal Films">
+                      <img src="https://lh3.googleusercontent.com/proxy/S_mOL5uL8j_QDONpeuV7sNnfuaPAwsYzdaIrJ1e4r8CD36kxha99_VfE5jwzzXWHmhUmoV7JiUKD1drUBmuEzdvMy_dK1rh12Z1mcQV-P5iLZutBnSMmPVT_N_XjjlwB9gOqdA" alt="Royal Films">
                       </a>  
                     </div>
                       
